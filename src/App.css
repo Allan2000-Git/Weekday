@@ -1,4 +1,105 @@
 .main_heading {
   text-align: center;
   padding: 20px 0;
+  font-size: 22px !important;
+  color: black;
+}
+
+/* Job Card */
+
+.job-card{
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px 0px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  height: 100%;
+}
+
+.company-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.company-container {
+  display: flex;
+  align-items: start;
+  gap: 15px;
+}
+
+.company-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.company-details > h2 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  color: #8b8b8b;
+}
+
+.company-details > h3 {
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: capitalize;
+}
+
+.company-details > p {
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+.about-company-wrapper {
+  position: relative;
+}
+
+.about-company-wrapper > p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.about-company-container > p {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.3rem;
+}
+
+.toggle-details {
+  margin: 10px 0;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  position: relative;
+  
+}
+
+.toggle-details-btn {
+  cursor: pointer;
+  text-align: center;
+  color: #4943da;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.job-card > button {
+  width: 100%;
+  background-color: rgb(85, 239, 196);
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 8px;
+  margin: 5px 0;
+  text-transform: none;
+  box-shadow: none;
 }
