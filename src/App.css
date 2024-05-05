@@ -1,3 +1,7 @@
+body {
+  min-height: 101vh;
+}
+
 .main_heading {
   text-align: center;
   padding: 20px 0;
@@ -87,8 +91,7 @@
   color: #4943da;
   font-size: 14px;
   font-weight: 500;
-  display: block;
-  width: 100%;
+  display: inline-block;
   margin-top: 10px;
 }
 

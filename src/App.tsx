@@ -1,13 +1,15 @@
-import { Typography } from '@mui/material'
 import './App.css'
 import SearchJobs from './pages/SearchJobs'
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
 function App() {
 
   return (
     <>
-      <Typography variant="h1" className="main_heading">Weekday Assignment</Typography>
-      <SearchJobs />
+      <Provider store={store}>
+        <SearchJobs />
+      </Provider>
     </>
   )
 }

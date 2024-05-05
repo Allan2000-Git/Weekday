@@ -3,7 +3,7 @@ export type Job = {
     jdLink: string;
     jobDetailsFromCompany: string;
     maxJdSalary: number;
-    minJdSalary: number | null;
+    minJdSalary: number;
     salaryCurrencyCode: string;
     location: string;
     minExp: number;
