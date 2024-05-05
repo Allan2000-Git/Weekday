@@ -21,7 +21,8 @@ const selectedOptionsSlice = createSlice({
     initialState,
     reducers: {
         setRoles: (state, action: PayloadAction<string[]>) => {
-            state.roles = Array.from(new Set([...state.roles, ...action.payload]));
+            const newRoles = action.payload.filter(role => !state.roles.includes(role));
+            state.roles.push(...newRoles);
         },
         setExperience: (state, action: PayloadAction<number>) => {
             state.minExp = action.payload;
