@@ -11,7 +11,7 @@ function JobCard({job}:IJobProps) {
     return (
         <Box className="job-card" component="div">
             <div className="company-container">
-                <img className="company-logo" src={job.logoUrl} alt={job.companyName} />
+                <img className="company-logo" src={job.logoUrl} alt={job.companyName} loading="lazy" />
                 <div className="company-details">
                     <Typography variant="h2">{job.companyName}</Typography>
                     <Typography variant="h3">{job.jobRole}</Typography>
@@ -50,13 +50,10 @@ function JobCard({job}:IJobProps) {
                     )
                 }
             </Box>
-            <Button sx={{
-                    '&:hover': {
-                        background: 'rgb(85, 239, 196)',
-                    },
-                }} 
+            <Button
                 className="apply-btn" 
                 variant="contained"
+                href={job.jdLink}
             >
                 ⚡ Easy Apply
             </Button>

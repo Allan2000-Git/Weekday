@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -5,48 +6,41 @@ import { Box, Container, Grid } from "@mui/material"
 import { useEffect } from "react";
 import { useState } from "react";
 import JobCard from "../components/JobCard";
-import {Job} from "../../types/types"
+import MultiSelectRole from "../components/MultiSelectRole";
+import useFetchJobsData from "../hooks/useFetchJobsData";
+import SingleSelectConfig from "../components/SingleSelectConfig";
 
 function SearchJobs() {
-    const [jobsData, setJobsData] = useState<Job[]>([]);
-    const [error, setError] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const {
+        jobsData,
+        hasMore,
+        isLoading,
+        error
+    } = useFetchJobsData({page: currentPage});
+
+    const handleScroll = async () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
+    };
+    
     useEffect(() => {
-        const fetchJobsData = async () => {
-            try {
-                const myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-
-                const body = JSON.stringify({
-                    "limit": 10,
-                    "offset": 0
-                });
-
-                const requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body
-                };
-
-                const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", requestOptions);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const result = await response.json();
-                setJobsData(result.jdList);
-            } catch (error: any) {
-                setError(error.message);
-            }
-        };
-
-        fetchJobsData();
-    }, []);
-
-    console.log(jobsData)
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isLoading, hasMore, currentPage, jobsData]);
 
     return (
         <Container maxWidth="lg">
             Search Jobs
+            <Box
+            sx={{display: 'flex', alignItems: 'center', justifyContent: 'start'}} 
+            component="div"
+            >
+                <MultiSelectRole />
+                <SingleSelectConfig />
+            </Box>
             <Box component="div" sx={{ marginTop: 7 }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {

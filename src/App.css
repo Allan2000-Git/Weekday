@@ -92,14 +92,14 @@
   margin-top: 10px;
 }
 
-.job-card > button {
+.apply-btn {
   width: 100%;
-  background-color: rgb(85, 239, 196);
-  color: rgb(0, 0, 0);
+  background-color: rgb(85, 239, 196) !important;
+  color: rgb(0, 0, 0) !important;
   font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 8px;
+  padding: 8px 18px !important;
+  border-radius: 8px !important;
   margin: 5px 0;
-  text-transform: none;
-  box-shadow: none;
+  text-transform: none !important;
+  box-shadow: none !important;
 }
