@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -5,11 +6,12 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setRoles } from '../slice/jobSlice';
+import { RootState } from '../app/store';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -56,18 +58,29 @@ function getStyles(name: string, allRoles: readonly string[], theme: Theme) {
 
 export default function MultiSelectRole() {
     const theme = useTheme();
-    const [allRoles, setAllRoles] = useState<string[]>([]);
 
     const dispatch = useDispatch();
+    const selectedOptions = useSelector((state: RootState) => state.selectedOptions);
+    const { roles } = selectedOptions;
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: any) => {
+        // store the input as an array. Eg: Frontend, Backend etc..
         const selectedValues = Array.isArray(event.target.value)
             ? event.target.value as string[]
             : [event.target.value as string];
-
-        setAllRoles(selectedValues);
-        dispatch(setRoles(allRoles));
+        
+        dispatch(setRoles(selectedValues));
     };
+
+    const memoizedRenderValue = useMemo(() => (
+        (selected: string[]) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                {selected.map((value: string) => (
+                    <Chip key={value} label={value} />
+                ))}
+            </Box>
+        )
+    ), []);
 
     return (
         <div>
@@ -77,18 +90,10 @@ export default function MultiSelectRole() {
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
                 multiple
-                value={allRoles}
+                value={roles}
                 onChange={handleChange}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {
-                        selected.map((value: string) => (
-                            <Chip key={value} label={value} />
-                        ))
-                    }
-                    </Box>
-                )}
+                renderValue={memoizedRenderValue}
                 MenuProps={MenuProps}
                 >
                 {names.map((name) => (
@@ -96,7 +101,7 @@ export default function MultiSelectRole() {
                     className="menu-item"
                     key={name}
                     value={name}
-                    style={getStyles(name, allRoles, theme)}
+                    style={getStyles(name, roles, theme)}
                     >
                     {name}
                     </MenuItem>

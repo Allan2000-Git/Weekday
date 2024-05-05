@@ -1,17 +1,22 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSearchQuery } from '../slice/jobSlice';
+import { RootState } from '../app/store';
+import { useCallback } from 'react';
+import { debounce } from 'lodash';
 
 function SeachCompanyInput() {
-    const [query, setQuery] = useState('');
     const dispatch = useDispatch();
+    const selectedOptions = useSelector((state: RootState) => state.selectedOptions);
+    const { searchQuery } = selectedOptions;
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setQuery(event.target.value);
-        dispatch(setSearchQuery(event.target.value))
-    };
+    const handleSearchChange = useCallback(
+        debounce((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            dispatch(setSearchQuery(event.target.value));
+        }, 300),
+        [dispatch]
+    );
 
     return (
         <Box
@@ -23,13 +28,15 @@ function SeachCompanyInput() {
         autoComplete="off"
         >
             <TextField 
-            value={query}
+            value={searchQuery}
             onChange={handleSearchChange}
             className="menu-item" 
             id="outlined-basic" 
             label="Search Company Name" 
             variant="outlined" 
-            size="small" />
+            size="small" 
+            aria-label="Search Company Name" 
+            />
         </Box>
     )
 }
