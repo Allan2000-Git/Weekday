@@ -31,8 +31,18 @@ const names = [
     'React Native',
     'Android',
     'Tech Lead',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    'NLP',
+    'Web3',
+    'SRE',
+    'Data Engineer',
+    'Legal',
+    'HR',
+    'Finance',
+    'Hardware',
+    'Mechanical',
+    'Systems',
+    'Management',
+    'Marketing'
 ];
 
 function getStyles(name: string, allRoles: readonly string[], theme: Theme) {
@@ -83,6 +93,7 @@ export default function MultiSelectRole() {
                 >
                 {names.map((name) => (
                     <MenuItem
+                    className="menu-item"
                     key={name}
                     value={name}
                     style={getStyles(name, allRoles, theme)}

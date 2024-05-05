@@ -10,7 +10,7 @@ function useFilteredJobsData({jobsData}:IFilterJobsProps) {
     const selectedOptions = useSelector((state: RootState) => state.selectedOptions);
 
     const filteredData = jobsData.filter((job: Job) => {
-        const { roles, minExp, minJdSalary, location } = selectedOptions;
+        const { roles, minExp, minJdSalary, location, searchQuery } = selectedOptions;
         
         // Filter by roles
         const lowerCaseRoles = roles.map(role => role.toLowerCase());
@@ -25,11 +25,14 @@ function useFilteredJobsData({jobsData}:IFilterJobsProps) {
         const filterByMinBasePaySalary = minJdSalaryNumber === 0 || job.minJdSalary >= minJdSalaryNumber || job.maxJdSalary >= minJdSalaryNumber;
 
         // Filter by location (remote or office)
-        const isRemote = location.length === 0 || job.location.toLowerCase().includes(location);
+        const isRemote = location.length === 0 || job.location.toLowerCase() === location.toLowerCase();
         const isOffice = !isRemote;
+
+        // Filter by search query (company name)
+        const isMatchingSearchQuery = searchQuery.length === 0 || job.companyName.toLowerCase().includes(searchQuery.toLowerCase());
         
         // return all the jobs that match the condition
-        return hasMatchingRoles && filterByExperience && filterByMinBasePaySalary && (isRemote || isOffice);
+        return hasMatchingRoles && filterByExperience && filterByMinBasePaySalary && (isRemote || isOffice) && isMatchingSearchQuery;
     });
 
     return {filteredData};

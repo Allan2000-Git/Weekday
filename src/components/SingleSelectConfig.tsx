@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch } from 'react-redux';
-import { setExperience, setMinimumBasePaySalary } from '../slice/jobSlice';
+import { setExperience, setLocation, setMinimumBasePaySalary } from '../slice/jobSlice';
 import { useState } from 'react';
 import { configOptions } from '../constants/configOptions';
 
@@ -25,6 +25,8 @@ export default function SingleSelectConfig() {
         } else if (name === 'salary') {
             const parsedValue = Number(value.replace(/[^0-9]/g, ''));
             dispatch(setMinimumBasePaySalary(parsedValue));
+        } else if(name === 'location') {
+            dispatch(setLocation(value));
         }
     };
 
@@ -40,11 +42,11 @@ export default function SingleSelectConfig() {
                 label={option.label}
                 name={option.key}
             >
-                <MenuItem value="">
+                <MenuItem className="menu-item" value="">
                     <em>None</em>
                 </MenuItem>
                 {option.values.map((value, index) => (
-                    <MenuItem key={index} value={value} aria-label={value.toString()}>
+                    <MenuItem className="menu-item" key={index} value={value} aria-label={value.toString()}>
                         {value}
                     </MenuItem>
                 ))}

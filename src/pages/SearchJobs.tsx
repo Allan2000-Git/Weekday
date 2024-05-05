@@ -14,6 +14,7 @@ import { RootState } from "../app/store";
 import { Job } from "../../types/types";
 import useFilteredJobsData from "../hooks/useFilteredJobsData";
 import { clearAllFilters} from "../slice/jobSlice";
+import SeachCompanyInput from "../components/SeachCompanyInput";
 
 function SearchJobs() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -52,11 +53,12 @@ function SearchJobs() {
             <Typography variant="h1" className="main_heading">Weekday Assignment</Typography>
             Search Jobs
             <Box
-            sx={{display: 'flex', alignItems: 'center'}} 
+            sx={{display: 'flex', alignItems: 'center', gap: "10px", flexWrap: "wrap"}} 
             component="div"
             >
                 <MultiSelectRole />
                 <SingleSelectConfig />
+                <SeachCompanyInput />
                 <span className="toggle-details-btn" onClick={handleClearFilters}>Clear all filters</span>
             </Box>
             <Box component="div" sx={{ marginTop: 7 }}>

@@ -5,13 +5,15 @@ interface SelectedOptionsState {
     minExp: number;
     minJdSalary: number;
     location: string;
+    searchQuery: string;
 }
 
 const initialState: SelectedOptionsState = {
     roles: [],
     minExp: 0,
     minJdSalary: 0,
-    location: ""
+    location: "",
+    searchQuery: "",
 };
 
 const selectedOptionsSlice = createSlice({
@@ -19,7 +21,7 @@ const selectedOptionsSlice = createSlice({
     initialState,
     reducers: {
         setRoles: (state, action: PayloadAction<string[]>) => {
-            state.roles = [...state.roles, ...action.payload]
+            state.roles = Array.from(new Set([...state.roles, ...action.payload]));
         },
         setExperience: (state, action: PayloadAction<number>) => {
             state.minExp = action.payload;
@@ -30,6 +32,9 @@ const selectedOptionsSlice = createSlice({
         setLocation: (state, action: PayloadAction<string>) => {
             state.location = action.payload;
         },
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+        },
         clearAllFilters: (state) => {
             state.roles = [],
             state.minExp = 0,
@@ -38,5 +43,5 @@ const selectedOptionsSlice = createSlice({
     }
 });
 
-export const { setRoles, setExperience, setMinimumBasePaySalary, setLocation, clearAllFilters } = selectedOptionsSlice.actions;
+export const { setRoles, setExperience, setMinimumBasePaySalary, setLocation, setSearchQuery, clearAllFilters } = selectedOptionsSlice.actions;
 export default selectedOptionsSlice.reducer;
