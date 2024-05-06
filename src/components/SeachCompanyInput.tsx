@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchQuery } from '../slice/jobSlice';
 import { RootState } from '../app/store';
-import { useCallback } from 'react';
 import { debounce } from 'lodash';
 
 function SeachCompanyInput() {
@@ -11,12 +10,12 @@ function SeachCompanyInput() {
     const selectedOptions = useSelector((state: RootState) => state.selectedOptions);
     const { searchQuery } = selectedOptions;
 
-    const handleSearchChange = useCallback(
-        debounce((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            dispatch(setSearchQuery(event.target.value));
-        }, 300),
-        [dispatch]
-    );
+    // use of debounce to limit the number of network calls made to the api to fetch the data
+    const betterFunction = debounce((query: string) => dispatch(setSearchQuery(query)), 300);
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {    
+        betterFunction(event.target.value);
+    }
 
     return (
         <Box

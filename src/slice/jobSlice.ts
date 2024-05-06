@@ -39,7 +39,9 @@ const selectedOptionsSlice = createSlice({
         clearAllFilters: (state) => {
             state.roles = [],
             state.minExp = 0,
-            state.minJdSalary = 0
+            state.minJdSalary = 0,
+            state.location = "",
+            state.searchQuery = ""
         }
     }
 });

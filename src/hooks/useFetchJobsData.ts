@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { debounce } from 'lodash';
 import { Job } from '../../types/types';
 
 interface IFetchProps {
@@ -13,7 +12,7 @@ function useFetchJobsData({ page }: IFetchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
 
-    const fetchJobsData = debounce(async (pageNumber: number) => {
+    const fetchJobsData = async (pageNumber: number) => {
         setIsLoading(true);
         try {
             const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", {
@@ -45,7 +44,7 @@ function useFetchJobsData({ page }: IFetchProps) {
         } finally {
             setIsLoading(false);
         }
-    }, 300);
+    };
 
     useEffect(() => {
         fetchJobsData(page);
